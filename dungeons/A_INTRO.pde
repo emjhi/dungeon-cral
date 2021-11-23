@@ -1,17 +1,14 @@
 void intro() {
-  //background
+
+  //introStart.show();
+  image(introimage, 0, 0);
   introGif.show();
-  introStart.show();
-  if (introStart.clicked) {
-    mode = GAME;
+
+  textFont(windows);
+  textSize(40);
+  text("DUNGEON CRAWL", 220, 55);
+
+  if (mouseReleased){
+   mode = GAME; 
   }
-
-  image(sign, 415, 125, 650, 350);
-
-  //text
-  textFont(intro);
-  textSize(50);
-  fill(255);
-  text("Dungeon", 400, 100);
-  text("Crawl", 400, 160);
 }

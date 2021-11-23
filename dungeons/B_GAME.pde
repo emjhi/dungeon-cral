@@ -1,7 +1,25 @@
 void game() {
   drawRoom();
   drawGameObj();
-  drawDarkness();
+  // drawDarkness();
+
+  //map
+  rectMode(CORNER);
+  fill(255);
+  rect(-3, -5, 195, 185);
+  drawMiniMap();
+  mapWindow.resize(200, 200);
+  image(mapWindow, -3, -5);
+
+  //text
+  fill(pink);
+  textSize(25);
+  text("lives:" + myHero.lives, 675, 75);
+  text("health:" + myHero.health, 675, 150);
+
+  pause.show();
+
+  if (pause.clicked) mode = PAUSE;
 }
 
 
@@ -9,10 +27,10 @@ void game() {
 
 
 void drawRoom() {
-  background(0, 0, 255);
+  background(darkgrey);
 
   //linrds
-  stroke(0);
+  stroke(ligrey);
   line(0, 0, width, height);
   line(0, 600, width, 0);
 
@@ -45,11 +63,18 @@ void drawRoom() {
 void  drawGameObj() {
   for (int i = 0; i < myObjects.size(); i++) {
     GameObject obj = myObjects.get(i);
-    obj.show();
-    obj.act();
-    if (obj.hp <= 0) {
-      myObjects.remove(i);
-      i--;
+    if (obj.roomX == myHero.roomX && obj.roomY == myHero.roomY) {
+      obj.show();
+      obj.act();
+
+      if (obj.hp <= 0) {
+        myObjects.remove(i);
+        i--;
+      }
+      //if (obj.lives <= 0) {
+      //  myObjects.remove(i);
+      //  i--;
+      //}
     }
   }
 }
@@ -57,6 +82,29 @@ void  drawGameObj() {
 void drawDarkness() {
   for (int i = 0; i < dark.size(); i++) {
     dark.get(i).show();
-    dark.get(i).act();
   }
+}
+
+void drawMiniMap() {
+  pushMatrix();
+  translate(40, 20);
+  int x = 0, y = 0;
+  float size = 10;
+
+  while (y < map2.height) {
+    color c = map2.get(x, y);
+    noStroke();
+    fill(c);
+    square(x*size, y*size, size);
+
+    x++;
+    if ( x >= map2.width) {
+      x = 0;
+      y++;
+    }
+  }
+  fill(cyan);
+  square(myHero.roomX*size, myHero.roomY*size, size);
+  rectMode(CENTER);
+  popMatrix();
 }
