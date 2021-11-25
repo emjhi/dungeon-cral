@@ -3,7 +3,6 @@ class Enemy extends GameObject {
   float timer, threshold;
   int x;
   int y;
-  int damage;
   
   Enemy() {
     location = new PVector(width/2, height/2);
@@ -14,12 +13,11 @@ class Enemy extends GameObject {
     size = 30;
   }
 
-  Enemy(int health, int s, int x, int y, int d) {
+  Enemy(int health, int s, int x, int y) {
     hp  = health;
     size = s;
     roomX = x;
     roomY = y;
-    damage  = d;
     location = new PVector(width/2, height/2);
     velocity = new PVector(0, 0);
   }

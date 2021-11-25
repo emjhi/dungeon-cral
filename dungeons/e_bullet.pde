@@ -1,16 +1,13 @@
 class EBullet extends GameObject {
 
   PVector x, y;
-  int shotTimer;
   int damage;
 
   EBullet(float x, float y, int d) {
-    shotTimer = 50;
     location = new PVector(x, y);
     velocity = new PVector(myHero.location.x - location.x, myHero.location.y - location.y);
-    velocity.setMag(7);
+    velocity.setMag(d);
     size = 10;
-    damage = d;
     roomX = myHero.roomX;
     roomY = myHero.roomY;
   }

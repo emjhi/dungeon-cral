@@ -33,7 +33,7 @@ class Gif {
     }
   }
 
-  void show() {
+  void show(float x, float y, float w, float h) {
     image(gif[n], x, y, w, h);
     if (frameCount % 5 == 0) n = n + 1;
     if (n == f) n = 0;

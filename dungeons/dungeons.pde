@@ -11,23 +11,20 @@ final int LIVES = 3;
 //enemy settings
 int BADDIE_HP = 100; 
 int BADDIE_SIZE = 30;
-int BADDIE_DAMAGE = 15;
 
 int SNEAKY_HP = 100;
 int SNEAKY_SIZE = 30;
-int SNEAKY_DAMAGE = 15;
 
 int SPAWNER_HP = 300;
 int SPAWNER_SIZE = 50;
-int SPAWNER_DAMAGE = 0;
 
 int TURRET_HP = 50;
 int TURRET_SIZE = 50;
-int TURRET_DAMAGE = 5;
+int TURRET_DAMAGE = 15;
 
 int TELO_HP = 100;
 int TELO_SIZE = 30;
-int TELO_DAMAGE = 10;
+int TELO_DAMAGE = 5;
 //wapon settings
 int OP_THRESHOLD = 100;
 int OP_SPEED = 100;
@@ -61,9 +58,11 @@ PImage map, map2;
 PImage introimage;
 PImage mapWindow;
 PImage baddie, boi2, sneaky, turret, telo, spawner;
+PImage manup, mandown, manleft, manright;
 
 //GIF
 Gif introGif;
+Gif manupGif, mandownGif, manleftGif, manrightGif;
 
 //font
 PFont windows;
@@ -93,8 +92,12 @@ void setup() {
   wkey = akey = skey = dkey = spacekey = false;
 
   //gif
-  introGif = new Gif(15, "frame_", "_delay-0.06s.png", 20, 115, 75, 150);
-
+  introGif = new Gif(15, "introGif/frame_", "_delay-0.06s.png", 20, 115, 75, 150);
+  
+  manupGif = new Gif(2, "man/up/frame_", "_delay-0.25s.png");
+  mandownGif = new Gif(2, "man/down/frame_", "_delay-0.25s.png");
+  manleftGif = new Gif(2, "man/left/frame_", "_delay-0.25s.png");
+  manrightGif = new Gif(2, "man/right/frame_", "_delay-0.25s.png");
   //fonyt
   windows = createFont("MS Sans Serif 8pt bold.ttf", 50);
 

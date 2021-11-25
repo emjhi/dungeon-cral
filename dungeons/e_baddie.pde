@@ -1,7 +1,7 @@
 class Baddie extends Enemy {
 
   Baddie(int x, int y) {
-    super(BADDIE_HP, BADDIE_SIZE, x, y, BADDIE_DAMAGE);
+    super(BADDIE_HP, BADDIE_SIZE, x, y);
   }
 
   void show() {

@@ -1,7 +1,7 @@
 class Sneaky extends Enemy {
 
   Sneaky(int x, int y) {
-    super(SNEAKY_HP, SNEAKY_SIZE, x, y, SNEAKY_DAMAGE);
+    super(SNEAKY_HP, SNEAKY_SIZE, x, y);
   }
 
   void show() {

@@ -1,7 +1,7 @@
 void game() {
   drawRoom();
   drawGameObj();
-  // drawDarkness();
+  //drawDarkness();
 
   //map
   rectMode(CORNER);
@@ -15,10 +15,10 @@ void game() {
   fill(pink);
   textSize(25);
   text("lives:" + myHero.lives, 675, 75);
-  text("health:" + myHero.health, 675, 150);
+  text("health:" + myHero.health, 675, 125);
+  text("ammo:" + myHero.myWeapon.amount + "/" + myHero.myWeapon.ammo, 625, 500);
 
   pause.show();
-
   if (pause.clicked) mode = PAUSE;
 }
 
@@ -71,10 +71,6 @@ void  drawGameObj() {
         myObjects.remove(i);
         i--;
       }
-      //if (obj.lives <= 0) {
-      //  myObjects.remove(i);
-      //  i--;
-      //}
     }
   }
 }

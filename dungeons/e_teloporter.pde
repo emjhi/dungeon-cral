@@ -4,7 +4,7 @@ class Teloporter extends Enemy {
 
 
   Teloporter(int x, int y) {
-    super(TELO_HP, TELO_SIZE, x, y, TELO_DAMAGE);
+    super(TELO_HP, TELO_SIZE, x, y);
     timer = 0; 
     threshold = random(1000);
 
@@ -28,7 +28,7 @@ class Teloporter extends Enemy {
 
     shotTimer++;
     if (shotTimer >= shotThreshold) {
-      myObjects.add(new EBullet(location.x, location.y, 10));
+      myObjects.add(new EBullet(location.x, location.y, TELO_DAMAGE));
       shotTimer = 0;
     }
 

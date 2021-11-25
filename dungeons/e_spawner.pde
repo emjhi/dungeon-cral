@@ -1,7 +1,7 @@
 class Spawner extends Enemy {
 
   Spawner(int x, int y) {
-    super(SPAWNER_HP, SPAWNER_SIZE, x, y, SPAWNER_DAMAGE);
+    super(SPAWNER_HP, SPAWNER_SIZE, x, y);
     timer = 0; 
     threshold = random(1000);
   }
