@@ -3,7 +3,7 @@ class Enemy extends GameObject {
   float timer, threshold;
   int x;
   int y;
-  
+
   Enemy() {
     location = new PVector(width/2, height/2);
     velocity = new PVector(0, 0);
@@ -11,6 +11,7 @@ class Enemy extends GameObject {
     roomX = 1;
     roomY = 1;
     size = 30;
+    xp = 1;
   }
 
   Enemy(int health, int s, int x, int y) {
@@ -47,10 +48,10 @@ class Enemy extends GameObject {
         if ( d <= size/2 + obj.size/2) {
           hp = hp - int(obj.velocity.mag());
           obj.hp = 0;
-          if (hp <= 0){
+          if (hp <= 0) {
             myObjects.add(new DroppedItem(location.x, location.y, roomX, roomY));
+            myHero.xp += xp;
           }
-          
         }
       }
       i++;

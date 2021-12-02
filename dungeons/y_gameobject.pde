@@ -1,11 +1,13 @@
 class GameObject {
 
-  int hp;
   PVector location;
   PVector velocity;
   int roomX, roomY;
-  int size;
   int lives;
+  int hp, maxHp;
+  int size;
+  int speed;
+  int xp;
 
   GameObject() {
     location = new PVector(width/2, height/2);
@@ -35,7 +37,7 @@ class GameObject {
 
   boolean collidingWith(GameObject obj) {
     float d = dist(obj.location.x, obj.location.y, location.x, location.y);
-    if (roomingWith(obj) && d < size/2 + obj.size/2)
+    if (roomingWith(obj) && d < size/2 + obj.size/2 && hp > 0)
       return true;
     else 
     return false;

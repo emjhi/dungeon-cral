@@ -10,6 +10,7 @@ class Teloporter extends Enemy {
 
     shotTimer = 0;
     shotThreshold = 100;
+    xp = 7;
   }
 
   void show() {

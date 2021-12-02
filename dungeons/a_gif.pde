@@ -1,14 +1,15 @@
 class Gif {
 
-  int f;
+  int f, frameRate;
   PImage[] gif;
   int n;
   float x, y, w, h;
 
-  Gif(int nf, String pre, String end) {
+  Gif(int nf, String pre, String end, int fr) {
     n = 0;
     f = nf;
-
+    frameRate = fr;
+    
     gif = new PImage[f];
     int i = 0;
     while ( i < f) {
@@ -35,7 +36,7 @@ class Gif {
 
   void show(float x, float y, float w, float h) {
     image(gif[n], x, y, w, h);
-    if (frameCount % 5 == 0) n = n + 1;
+    if (frameCount % 4 == 0) n = n + 1;
     if (n == f) n = 0;
   }
 }

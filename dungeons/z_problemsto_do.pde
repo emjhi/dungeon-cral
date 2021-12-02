@@ -1,2 +1,3 @@
 //some monesters dont die with the op 
-//how to make shotgun not shoot weirdly when threshold and only shoot one ammon thing
+//wtf is my theme bro kinda not poggers
+//is there a way to slyoly unciver the map as you explore the rooms

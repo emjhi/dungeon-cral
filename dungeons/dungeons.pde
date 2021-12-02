@@ -8,15 +8,19 @@ final int GUN = 1;
 final int HEALTH = 2;
 final int LIVES = 3;
 
+// upgrade prices
+int ammoXP = 5;
+int speedXP = 5;
+
 //enemy settings
 int BADDIE_HP = 100; 
 int BADDIE_SIZE = 30;
 
 int SNEAKY_HP = 100;
-int SNEAKY_SIZE = 30;
+int SNEAKY_SIZE = 40;
 
 int SPAWNER_HP = 300;
-int SPAWNER_SIZE = 50;
+int SPAWNER_SIZE = 75;
 
 int TURRET_HP = 50;
 int TURRET_SIZE = 50;
@@ -25,18 +29,19 @@ int TURRET_DAMAGE = 15;
 int TELO_HP = 100;
 int TELO_SIZE = 30;
 int TELO_DAMAGE = 5;
+
 //wapon settings
 int OP_THRESHOLD = 100;
 int OP_SPEED = 100;
 int OP_AMMO = 5;
 
 int SPECTRE_THRESHOLD = 20;
-int SPECTRE_SPEED = 10;
+int SPECTRE_SPEED = 15;
 int SPECTRE_AMMO = 30;
 
-int SHOTGUN_THRESHOLD = 10;
-int SHOTGUN_SPEED = 7;
-int SHOTGUN_AMMO = 30;
+int SHOTGUN_THRESHOLD = 50;
+int SHOTGUN_SPEED = 10;
+int SHOTGUN_AMMO = 12;
 
 //objects
 ArrayList<GameObject> myObjects;
@@ -58,11 +63,12 @@ PImage map, map2;
 PImage introimage;
 PImage mapWindow;
 PImage baddie, boi2, sneaky, turret, telo, spawner;
-PImage manup, mandown, manleft, manright;
+PImage button, buttonPressed;
 
 //GIF
 Gif introGif;
 Gif manupGif, mandownGif, manleftGif, manrightGif;
+Gif healthGif, ammoGif, weaponGif, livesGif;
 
 //font
 PFont windows;
@@ -71,9 +77,10 @@ PFont windows;
 boolean mouseReleased;
 boolean hadPressed;
 Button pause;
+Button upgrade1, upgrade2, upgrade3;
 
 //keys
-boolean wkey, akey, skey, dkey, spacekey;
+boolean wkey, akey, skey, dkey, ukey, spacekey;
 
 //mode frameowrk
 int mode;
@@ -81,6 +88,7 @@ final int INTRO = 0;
 final int GAME = 1;
 final int PAUSE = 2;
 final int GAMEOVER = 3;
+final int UPGRADE = 4;
 
 void setup() {
   size(800, 600, FX2D);
@@ -89,15 +97,23 @@ void setup() {
   mode = INTRO;
 
   //keys
-  wkey = akey = skey = dkey = spacekey = false;
+  wkey = akey = skey = dkey = ukey = spacekey = false;
 
   //gif
   introGif = new Gif(15, "introGif/frame_", "_delay-0.06s.png", 20, 115, 75, 150);
-  
-  manupGif = new Gif(2, "man/up/frame_", "_delay-0.25s.png");
-  mandownGif = new Gif(2, "man/down/frame_", "_delay-0.25s.png");
-  manleftGif = new Gif(2, "man/left/frame_", "_delay-0.25s.png");
-  manrightGif = new Gif(2, "man/right/frame_", "_delay-0.25s.png");
+
+  //drop gifs
+  healthGif = new Gif(3, "drops/health/frame_", "_delay-0.25s.png.png", 25);
+  ammoGif = new Gif(4, "drops/ammo/frame_", "_delay-0.5s.png.png", 35);
+  weaponGif = new Gif(4, "drops/weapon/frame_", "_delay-0.5s.png.png", 25);
+  livesGif = new Gif(5, "drops/lives/frame_", "_delay-0.25s.png.png", 35);
+
+  //moving gifs
+  manupGif = new Gif(2, "man/up/frame_", "_delay-0.25s.png", 15);
+  mandownGif = new Gif(2, "man/down/frame_", "_delay-0.25s.png", 15);
+  manleftGif = new Gif(2, "man/left/frame_", "_delay-0.25s.png", 15);
+  manrightGif = new Gif(2, "man/right/frame_", "_delay-0.25s.png", 15);
+
   //fonyt
   windows = createFont("MS Sans Serif 8pt bold.ttf", 50);
 
@@ -106,15 +122,22 @@ void setup() {
   map2 = loadImage("New Piskel-1.png.png");
   introimage = loadImage("intro screen.jpg");
   mapWindow = loadImage("map window.png");
-  baddie = loadImage("pixil-frame-0.png");
-  boi2 = loadImage("pixil-frame-0 (1).png");
-  sneaky = loadImage("pixil-frame-1 (2).png");
-  turret = loadImage("pixil-frame-0 (4).png");
-  telo = loadImage("pixil-frame-0 (5).png");
-  spawner = loadImage("MobSpawnerNew.png");
+  button = loadImage("button.png");
+  buttonPressed = loadImage("buttonPressed.png");
+
+  //enemy images
+  baddie = loadImage("enemy/pixil-frame-0.png");
+  boi2 = loadImage("enemy/pixil-frame-0 (1).png");
+  sneaky = loadImage("enemy/pixil-frame-1 (2).png");
+  turret = loadImage("enemy/pixil-frame-0 (4).png");
+  telo = loadImage("enemy/pixil-frame-0 (5).png");
+  spawner = loadImage("enemy/MobSpawnerNew.png");
 
   //buttons
   pause = new Button(" I I ", 750, 40, 50, 50, ligrey, darkgrey, windows);
+  upgrade1 = new Button(220, 240, 40, 40);
+  upgrade2 = new Button(220, 315, 40, 40);
+  upgrade3 = new Button(220, 390, 40, 40);
 
   //game objects
   myHero = new Hero();
@@ -177,6 +200,8 @@ void draw() {
     pause();
   } else if (mode == GAMEOVER) {
     gameover();
+  } else if (mode == UPGRADE) {
+    upgrade();
   } else {
     println("Mode error:" + mode);
   }

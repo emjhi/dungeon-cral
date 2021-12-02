@@ -6,7 +6,8 @@ void game() {
   //map
   rectMode(CORNER);
   fill(255);
-  rect(-3, -5, 195, 185);
+  noStroke();
+  rect(-3, -5, 200, 185);
   drawMiniMap();
   mapWindow.resize(200, 200);
   image(mapWindow, -3, -5);
@@ -20,6 +21,8 @@ void game() {
 
   pause.show();
   if (pause.clicked) mode = PAUSE;
+  
+  if (ukey) mode = UPGRADE;
 }
 
 

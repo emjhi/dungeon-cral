@@ -2,11 +2,12 @@ class Sneaky extends Enemy {
 
   Sneaky(int x, int y) {
     super(SNEAKY_HP, SNEAKY_SIZE, x, y);
+    xp = 5;
   }
 
   void show() {
     imageMode(CENTER);
-    sneaky.resize(80, 0);
+    sneaky.resize(SNEAKY_SIZE, 0);
     image(sneaky, location.x, location.y);
     imageMode(CORNER);
 

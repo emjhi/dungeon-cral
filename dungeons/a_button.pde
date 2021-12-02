@@ -18,6 +18,15 @@ class Button {
     clicked = false;
   }
 
+  Button(int _x, int _y, int _w, int _h) {
+    x = _x;
+    y = _y;
+    w = _w;
+    h = _h;
+    clicked = false;
+  }
+
+
   void show() {
     //rectangle
     rectMode(CENTER);
@@ -40,6 +49,23 @@ class Button {
     textFont(font);
     textSize(w/4);
     text(text, x, y - 5);
+
+    if (mouseReleased && mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {
+      clicked  = true;
+    } else {
+      clicked = false;
+    }
+  }
+
+  void show1() {
+    //rectangle
+    rectMode(CENTER);
+    if (mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {
+      image(buttonPressed, x, y);
+    } else {
+      image(button, x, y);
+    }
+   
 
     if (mouseReleased && mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {
       clicked  = true;

@@ -1,22 +1,23 @@
 class Hero extends GameObject {
 
   float immunTimer;
-  float speed; 
-  int lives;
+  int lives, maxLives;
   int health;
+
   Weapon myWeapon;
   Gif currentAction;
 
   Hero() {
     super();
-    health = 100;
-    lives = 3;
+    health = maxHp = 100;
+    lives = 0;
     speed = 5;
     roomX = 1;
     roomY = 1;
     size = 75;
+    maxLives = 3;
 
-    immunTimer = 150;
+    immunTimer = 75;
 
     myWeapon = new Spectre();
     currentAction = mandownGif;
@@ -28,10 +29,7 @@ class Hero extends GameObject {
     currentAction.show(location.x, location.y, size, size);
     imageMode(CORNER);
 
-    if (immunTimer > 0) {
-      fill(blue);
-    }
-
+    fill(blue);
     text(immunTimer, 400, 300);
   }
 
@@ -106,14 +104,14 @@ class Hero extends GameObject {
           float d = dist(obj.location.x, obj.location.y, location.x, location.y);
           if ( d <= size/2 + obj.size/2) {
             health = health - 10;
-            immunTimer = 150;
+            immunTimer = 75;
           }
         }
         if (obj instanceof EBullet && collidingWith(obj)) {
           float d = dist(obj.location.x, obj.location.y, location.x, location.y);
           if ( d <= size/2 + obj.size/2) {
             health = health - int(obj.velocity.mag());
-            immunTimer = 150;
+            immunTimer = 75;
           }
         }
       }
@@ -128,8 +126,14 @@ class Hero extends GameObject {
           item.hp--;
         }
         if (item.type == HEALTH) {
-          health = health + 25;
-          if (health >= 100) health = 100;
+          health = health + 20;
+          if (health >= maxHp) maxHp = 100;
+          item.hp--;
+        }
+        if (item.type == LIVES) {
+          if (lives < maxLives) {
+            lives++;
+          }
           item.hp--;
         }
       }

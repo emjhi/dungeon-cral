@@ -8,8 +8,11 @@ class Shotgun extends Weapon {
     if (shotTimer >= threshold && amount > 0) {
       PVector aimVector = new PVector(mouseX - myHero.location.x, mouseY - myHero.location.y);
       aimVector.setMag(bulletSpeed);
-      aimVector.rotate(random(-PI, PI));
-      myObjects.add(new Bullet(aimVector, pink, 5));
+
+      for (int i = 0; i < 20; i++) {
+        aimVector.rotate(random(-5, 5));
+        myObjects.add(new Bullet(aimVector, pink, 7));
+      }
       shotTimer = 0;
       amount--;
     }
