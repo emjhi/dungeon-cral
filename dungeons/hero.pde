@@ -1,5 +1,6 @@
 class Hero extends GameObject {
 
+  boolean[][] myMap;
   float immunTimer;
   int lives, maxLives;
   int health;
@@ -9,8 +10,9 @@ class Hero extends GameObject {
 
   Hero() {
     super();
+    myMap = new boolean[map.height][map.width];
     health = maxHp = 100;
-    lives = 0;
+    lives = 1;
     speed = 5;
     roomX = 1;
     roomY = 1;
@@ -19,7 +21,7 @@ class Hero extends GameObject {
 
     immunTimer = 75;
 
-    myWeapon = new Spectre();
+    myWeapon = new Shotgun();
     currentAction = mandownGif;
   }
 
@@ -35,6 +37,7 @@ class Hero extends GameObject {
 
   void act() {
     super.act();
+    myMap[roomY][roomX] = true;
 
     if (immunTimer <= 0) {
 
@@ -77,15 +80,19 @@ class Hero extends GameObject {
     //CHECK EXITS
     if (northRoom != #FFFFFF && location.y == height*0.1 && location.x >= width/2 - 50 && location.x <= width/2 + 50) {
       roomY--;
+      cleanUp();
       location = new PVector(width/2, height*0.9 - 10);
     } else if (southRoom != #FFFFFF && location.y == height*0.9 && location.x >= width/2 - 50 && location.x <= width/2 + 50) {
       roomY++;
+      cleanUp();
       location = new PVector(width/2, height*0.1 +10);
     } else if (eastRoom != #FFFFFF && location.x == width*0.9 && location.y >= height/2 - 50 && location.y <= height/2 + 50) {
       roomX++;
+      cleanUp();
       location = new PVector(width*0.1 + 10, height/2);
     } else if (westRoom != #FFFFFF && location.x == width*0.1 && location.y >= height/2 - 50 && location.y <= height/2 + 50) {
       roomX--;
+      cleanUp();
       location = new PVector(width*0.9 - 10, height/2);
     }
 
@@ -127,7 +134,7 @@ class Hero extends GameObject {
         }
         if (item.type == HEALTH) {
           health = health + 20;
-          if (health >= maxHp) maxHp = 100;
+          if (health >= maxHp) health = 100;
           item.hp--;
         }
         if (item.type == LIVES) {
@@ -136,6 +143,16 @@ class Hero extends GameObject {
           }
           item.hp--;
         }
+      }
+    }
+  }
+
+  void cleanUp() {
+    for (int i = 0; i < myObjects.size(); i++) {
+      GameObject obj = myObjects.get(i);
+      if (obj instanceof Bullet || obj instanceof Message || obj instanceof EBullet) {
+        myObjects.remove(i);
+        i--;
       }
     }
   }

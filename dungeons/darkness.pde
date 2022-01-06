@@ -14,7 +14,7 @@ class darkness {
 
   void show() {
     d = dist(x, y, myHero.location.x, myHero.location.y);
-    opacity = map(d, 50, 150, 100, 200);
+    opacity = map(d, 0, 600, 0, 255);
 
     rectMode(CORNER);
     fill(0, 0, 0, opacity);

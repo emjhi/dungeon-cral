@@ -8,7 +8,6 @@ void intro() {
   textSize(40);
   text("DUNGEON CRAWL", 220, 55);
 
-  if (mouseReleased) {
-    mode = GAME;
-  }
+  if (mouseReleased) mode = GAME;
+  
 }

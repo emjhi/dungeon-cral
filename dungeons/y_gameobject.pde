@@ -42,4 +42,12 @@ class GameObject {
     else 
     return false;
   }
+
+  //boolean wasRoomingWith(GameObject obj) {
+  //  if (roomX == obj.roomX && roomY == obj.roomY)
+
+  //    return true;
+  //  else 
+  //  return false;
+  //}
 }

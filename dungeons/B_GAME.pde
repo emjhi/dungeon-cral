@@ -1,31 +1,25 @@
 void game() {
   drawRoom();
   drawGameObj();
-  //drawDarkness();
-
-  //map
-  rectMode(CORNER);
-  fill(255);
-  noStroke();
-  rect(-3, -5, 200, 185);
+  drawDarkness();
   drawMiniMap();
-  mapWindow.resize(200, 200);
-  image(mapWindow, -3, -5);
+  drawHeart();
+  drawHealth();
+
+  //buttons
+  pause.show();
+  //if (pause.clicked) mode = PAUSE;
+  if (ukey) mode = UPGRADE;
 
   //text
   fill(pink);
   textSize(25);
-  text("lives:" + myHero.lives, 675, 75);
-  text("health:" + myHero.health, 675, 125);
+  //text("lives:" + myHero.lives, 675, 75);
+  //text("health:" + myHero.health, 675, 125);
   text("ammo:" + myHero.myWeapon.amount + "/" + myHero.myWeapon.ammo, 625, 500);
 
-  pause.show();
-  if (pause.clicked) mode = PAUSE;
-  
-  if (ukey) mode = UPGRADE;
+  if (myHero.hp == 0) mode = GAMEOVER;
 }
-
-
 
 
 
@@ -37,11 +31,16 @@ void drawRoom() {
   line(0, 0, width, height);
   line(0, 600, width, 0);
 
+  if (pause.clicked) {
+    MAP = floor2;
+  } else {
+    MAP = map2;
+  }
   //exits
-  northRoom = map.get(myHero.roomX, myHero.roomY - 1);
-  southRoom = map.get(myHero.roomX, myHero.roomY + 1);
-  eastRoom = map.get(myHero.roomX + 1, myHero.roomY);
-  westRoom = map.get(myHero.roomX - 1, myHero.roomY);
+  northRoom = MAP.get(myHero.roomX, myHero.roomY - 1);
+  southRoom = MAP.get(myHero.roomX, myHero.roomY + 1);
+  eastRoom = MAP.get(myHero.roomX + 1, myHero.roomY);
+  westRoom = MAP.get(myHero.roomX - 1, myHero.roomY);
 
   noStroke();
   fill(0);
@@ -85,25 +84,71 @@ void drawDarkness() {
 }
 
 void drawMiniMap() {
+  rectMode(CORNER);
+  fill(255);
+  noStroke();
+  rect(-3, -5, 200, 185);
   pushMatrix();
   translate(40, 20);
   int x = 0, y = 0;
   float size = 10;
 
-  while (y < map2.height) {
-    color c = map2.get(x, y);
+  if (pause.clicked) {
+    MAP = floor2;
+  } else {
+    MAP = map2;
+  }
+
+  while (y < MAP.height) {
+    color c = MAP.get(x, y);
     noStroke();
     fill(c);
+
+    if (myHero.myMap[y][x] == true) {
     square(x*size, y*size, size);
+    }
 
     x++;
-    if ( x >= map2.width) {
+    if ( x >= MAP.width) {
       x = 0;
       y++;
     }
   }
+
   fill(cyan);
   square(myHero.roomX*size, myHero.roomY*size, size);
+
   rectMode(CENTER);
   popMatrix();
+  mapWindow.resize(200, 200);
+  image(mapWindow, -3, -5);
+}
+
+void drawHeart() {
+  if (myHero.lives == 3) {
+    image(heart, 550, 15); 
+    image(heart, 590, 15); 
+    image(heart, 630, 15);
+  } else if (myHero.lives == 2) {
+    image(heart, 550, 15); 
+    image(heart, 590, 15);
+  } else if (myHero.lives == 1) {
+    image(heart, 550, 15);
+  } else if (myHero.lives == 0) {
+  }
+}
+
+void drawHealth() {
+  fill(0, 0, 0);
+  rect(myHero.location.x, myHero.location.y + 40, 56, 10);
+
+  fill(255, 0, 0);
+  rect(myHero.location.x, myHero.location.y + 40, 50, 6);
+
+  fill(0, 255, 0);
+  rectMode(CORNER);
+  if (myHero.health >= 0) {
+    rect(myHero.location.x - 25, myHero.location.y + 37, myHero.health/2, 6);
+  }
+  rectMode(CENTER);
 }

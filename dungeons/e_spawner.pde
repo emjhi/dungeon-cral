@@ -21,12 +21,12 @@ class Spawner extends Enemy {
     super.act();
 
     timer++;
+
     if (timer >= threshold) {
-      myObjects.add(new Baddie(x, y)); 
       timer = 0;
       threshold = random(1000);
+      myObjects.add(new Baddie(roomX, roomY));
     }
-
     println(timer, threshold);
   }
 }

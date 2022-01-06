@@ -5,7 +5,6 @@ class DroppedItem extends GameObject {
   Weapon w;
   Gif Item;
 
-
   DroppedItem(float x, float y, int rx, int ry) {
     type = int(random(0, 4));
     weap = int(random(0, 3));

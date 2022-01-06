@@ -2,6 +2,8 @@
 //oct 20th 2021
 //dungeon
 
+PImage MAP;
+
 //dropped items
 final int AMMO = 0;
 final int GUN = 1;
@@ -56,14 +58,16 @@ color cyan = #008080;
 color blue = #010081;
 color pink = #ff0081;
 
+
 color northRoom, southRoom, westRoom, eastRoom;
 
 //images
-PImage map, map2;
+PImage map, map2, floor2;
 PImage introimage;
 PImage mapWindow;
 PImage baddie, boi2, sneaky, turret, telo, spawner;
 PImage button, buttonPressed;
+PImage heart;
 
 //GIF
 Gif introGif;
@@ -80,7 +84,7 @@ Button pause;
 Button upgrade1, upgrade2, upgrade3;
 
 //keys
-boolean wkey, akey, skey, dkey, ukey, spacekey;
+boolean wkey, akey, skey, dkey, ukey, upkey, downkey, spacekey;
 
 //mode frameowrk
 int mode;
@@ -97,16 +101,16 @@ void setup() {
   mode = INTRO;
 
   //keys
-  wkey = akey = skey = dkey = ukey = spacekey = false;
+  wkey = akey = skey = dkey = ukey = upkey = downkey = spacekey = false;
 
   //gif
-  introGif = new Gif(15, "introGif/frame_", "_delay-0.06s.png", 20, 115, 75, 150);
+  introGif = new Gif(15, "introGif/frame_", "_delay-0.06s.png", 20, 115, 75, 150, 4);
 
   //drop gifs
-  healthGif = new Gif(3, "drops/health/frame_", "_delay-0.25s.png.png", 25);
-  ammoGif = new Gif(4, "drops/ammo/frame_", "_delay-0.5s.png.png", 35);
-  weaponGif = new Gif(4, "drops/weapon/frame_", "_delay-0.5s.png.png", 25);
-  livesGif = new Gif(5, "drops/lives/frame_", "_delay-0.25s.png.png", 35);
+  healthGif = new Gif(3, "drops/health/frame_", "_delay-0.25s.png.png", 15);
+  ammoGif = new Gif(4, "drops/ammo/frame_", "_delay-0.5s.png.png", 10);
+  weaponGif = new Gif(4, "drops/weapon/frame_", "_delay-0.5s.png.png", 10);
+  livesGif = new Gif(5, "drops/lives/frame_", "_delay-0.25s.png.png", 10);
 
   //moving gifs
   manupGif = new Gif(2, "man/up/frame_", "_delay-0.25s.png", 15);
@@ -120,10 +124,13 @@ void setup() {
   //images
   map = loadImage("New Piskel-1.png");
   map2 = loadImage("New Piskel-1.png.png");
+  floor2 = loadImage("map2.png");
+
   introimage = loadImage("intro screen.jpg");
   mapWindow = loadImage("map window.png");
   button = loadImage("button.png");
   buttonPressed = loadImage("buttonPressed.png");
+  heart = loadImage("pixil-frame-0 (5).png");
 
   //enemy images
   baddie = loadImage("enemy/pixil-frame-0.png");
@@ -169,7 +176,7 @@ void setup() {
 
     if (roomColour == pink ) {
       myObjects.add(new Spawner(x, y));
-      myObjects.add(new Turret(x, y));
+      //myObjects.add(new Turret(x, y));
     }
 
     if (roomColour == blue) {
