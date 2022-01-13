@@ -1,7 +1,7 @@
 class Spawner extends Enemy {
 
-  Spawner(int x, int y) {
-    super(SPAWNER_HP, SPAWNER_SIZE, x, y);
+  Spawner(int x, int y, int lx, int ly) {
+    super(SPAWNER_HP, SPAWNER_SIZE, x, y, lx, ly);
     timer = 0; 
     threshold = random(1000);
     xp = 10;
@@ -25,7 +25,7 @@ class Spawner extends Enemy {
     if (timer >= threshold) {
       timer = 0;
       threshold = random(1000);
-      myObjects.add(new Baddie(roomX, roomY));
+      myObjects.add(new Baddie(roomX, roomY, width/2, height/2));
     }
     println(timer, threshold);
   }

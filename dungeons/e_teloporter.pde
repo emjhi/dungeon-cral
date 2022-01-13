@@ -2,12 +2,10 @@ class Teloporter extends Enemy {
 
   int shotTimer, shotThreshold;
 
-
-  Teloporter(int x, int y) {
-    super(TELO_HP, TELO_SIZE, x, y);
+  Teloporter(int x, int y, int lx, int ly) {
+    super(TELO_HP, TELO_SIZE, x, y, lx, ly);
     timer = 0; 
     threshold = random(1000);
-
     shotTimer = 0;
     shotThreshold = 100;
     xp = 7;
@@ -17,7 +15,7 @@ class Teloporter extends Enemy {
     imageMode(CENTER);
     image(telo, location.x, location.y);
     imageMode(CORNER);
-    
+
     println(timer, threshold);
     fill(255, 0, 0);
     textSize(15);

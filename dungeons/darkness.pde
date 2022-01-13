@@ -22,4 +22,17 @@ class darkness {
     square(x, y, size);
     rectMode(CENTER);
   }
+
+
+//  void show() {
+//    int i = 0;
+//    d = dist(x, y, myObjects.get(i).location.x, myObjects.get(i).location.y);
+//    opacity = map(d, 0, 200, 0, 255);
+
+//    rectMode(CORNER);
+//    fill(0, 0, 0, opacity);
+//    noStroke();
+//    square(x, y, size);
+//    rectMode(CENTER);
+//  }
 }

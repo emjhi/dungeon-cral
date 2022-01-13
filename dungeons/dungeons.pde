@@ -3,6 +3,7 @@
 //dungeon
 
 PImage MAP;
+int points;
 
 //dropped items
 final int AMMO = 0;
@@ -45,6 +46,10 @@ int SHOTGUN_THRESHOLD = 50;
 int SHOTGUN_SPEED = 10;
 int SHOTGUN_AMMO = 12;
 
+int MAGIC_THRESHOLD = 30;
+int MAGIC_SPEED = 25;
+int MAGIC_AMMO = 10;
+
 //objects
 ArrayList<GameObject> myObjects;
 ArrayList<darkness> dark;
@@ -57,17 +62,22 @@ color darkgrey = #818181;
 color cyan = #008080;
 color blue = #010081;
 color pink = #ff0081;
-
+color forest = #1b9916;
+color orange = #ff8e1a;
+color sky = #1affdc;
+color purple = #7d1aff;
 
 color northRoom, southRoom, westRoom, eastRoom;
 
 //images
 PImage map, map2, floor2;
 PImage introimage;
+PImage gameover;
 PImage mapWindow;
 PImage baddie, boi2, sneaky, turret, telo, spawner;
 PImage button, buttonPressed;
 PImage heart;
+PImage firewall;
 
 //GIF
 Gif introGif;
@@ -84,7 +94,7 @@ Button pause;
 Button upgrade1, upgrade2, upgrade3;
 
 //keys
-boolean wkey, akey, skey, dkey, ukey, upkey, downkey, spacekey;
+boolean wkey, akey, skey, dkey, ukey, tkey, upkey, downkey, spacekey;
 
 //mode frameowrk
 int mode;
@@ -94,14 +104,22 @@ final int PAUSE = 2;
 final int GAMEOVER = 3;
 final int UPGRADE = 4;
 
+ArrayList<Weapon> currentWeapon;
+
 void setup() {
   size(800, 600, FX2D);
   rectMode(CENTER);
   textAlign(CENTER);
   mode = INTRO;
 
+  currentWeapon = new ArrayList<Weapon>();
+  currentWeapon.add(new Spectre());
+  currentWeapon.add(new Operator());
+  currentWeapon.add(new Shotgun());
+
+
   //keys
-  wkey = akey = skey = dkey = ukey = upkey = downkey = spacekey = false;
+  wkey = akey = skey = dkey = ukey = upkey = tkey = downkey = spacekey = false;
 
   //gif
   introGif = new Gif(15, "introGif/frame_", "_delay-0.06s.png", 20, 115, 75, 150, 4);
@@ -131,6 +149,8 @@ void setup() {
   button = loadImage("button.png");
   buttonPressed = loadImage("buttonPressed.png");
   heart = loadImage("pixil-frame-0 (5).png");
+  gameover = loadImage("0d01101bb97d71914bf42d19d06258fa.jpg");
+  firewall = loadImage("fire wall.png");
 
   //enemy images
   baddie = loadImage("enemy/pixil-frame-0.png");
@@ -150,7 +170,6 @@ void setup() {
   myHero = new Hero();
   myObjects = new ArrayList<GameObject>();
   myObjects.add(myHero);
-  myObjects.add(new Teloporter(1, 1));
 
   //darkness
   dark = new ArrayList<darkness>(1000);
@@ -175,16 +194,40 @@ void setup() {
     color roomColour =  map.get(x, y);
 
     if (roomColour == pink ) {
-      myObjects.add(new Spawner(x, y));
-      //myObjects.add(new Turret(x, y));
+      myObjects.add(new Spawner(x, y, width/2, height/2));
+      myObjects.add(new Turret(x, y, 640, 500));
     }
 
     if (roomColour == blue) {
-      myObjects.add(new Sneaky(x, y));
+      myObjects.add(new Sneaky(x, y, 200, 500));
+      myObjects.add(new Teloporter(x, y, 500, 400));
+    }
+
+    if (roomColour == forest) {
+      myObjects.add(new Sneaky(x, y, 100, 500));
+      myObjects.add(new Sneaky(x, y, 600, 500));
+    }
+
+    if (roomColour == orange) {
+      myObjects.add(new Spawner(x, y, 650, 500));
+      myObjects.add(new Spawner(x, y, 150, 100));
+    }
+
+    if (roomColour == sky) {
+      myObjects.add(new Teloporter(x, y, width/2, height/2));
+      myObjects.add(new Turret(x, y, 640, 100));
+    }
+
+    if (roomColour == purple) {
+      myObjects.add(new Turret(x, y, 640, 500));
+      myObjects.add(new Turret(x, y, 640, 100));
+      myObjects.add(new Turret(x, y, width/2, height/2));
+      myObjects.add(new Turret(x, y, 100, 500));
+      myObjects.add(new Turret(x, y, 100, 100));
     }
 
     if (roomColour == cyan) {
-      myObjects.add(new Baddie(x, y));
+      myObjects.add(new Baddie(x, y, 300, 400));
     }
 
     x++;

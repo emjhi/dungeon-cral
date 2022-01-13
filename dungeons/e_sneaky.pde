@@ -1,7 +1,7 @@
 class Sneaky extends Enemy {
 
-  Sneaky(int x, int y) {
-    super(SNEAKY_HP, SNEAKY_SIZE, x, y);
+  Sneaky(int x, int y, int lx, int ly) {
+    super(SNEAKY_HP, SNEAKY_SIZE, x, y, lx, ly);
     xp = 2;
   }
 
@@ -14,7 +14,7 @@ class Sneaky extends Enemy {
     //health
     fill(255, 0, 0);
     textSize(15);
-    text(hp, location.x, location.y + 45);
+    text(hp, location.x, location.y + 25);
   }
 
   void act() {

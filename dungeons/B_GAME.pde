@@ -18,7 +18,13 @@ void game() {
   //text("health:" + myHero.health, 675, 125);
   text("ammo:" + myHero.myWeapon.amount + "/" + myHero.myWeapon.ammo, 625, 500);
 
+  //losing
   if (myHero.hp == 0) mode = GAMEOVER;
+
+  //wining
+  if (points >= 95) {
+   mode = GAMEOVER; 
+  }
 }
 
 
@@ -36,6 +42,7 @@ void drawRoom() {
   } else {
     MAP = map2;
   }
+
   //exits
   northRoom = MAP.get(myHero.roomX, myHero.roomY - 1);
   southRoom = MAP.get(myHero.roomX, myHero.roomY + 1);
@@ -84,14 +91,12 @@ void drawDarkness() {
 }
 
 void drawMiniMap() {
-  rectMode(CORNER);
-  fill(255);
-  noStroke();
-  rect(-3, -5, 200, 185);
   pushMatrix();
   translate(40, 20);
   int x = 0, y = 0;
   float size = 10;
+  float opacity;
+  float d;
 
   if (pause.clicked) {
     MAP = floor2;
@@ -99,13 +104,21 @@ void drawMiniMap() {
     MAP = map2;
   }
 
+  d = dist(x, y, myHero.location.x, myHero.location.y);
+  opacity = map(d, 200, 300, 0, 255);
+
+  rectMode(CORNER);
+  fill(255, opacity);
+  noStroke();
+  rect(-45, -50, 200, 185);
+
   while (y < MAP.height) {
     color c = MAP.get(x, y);
     noStroke();
-    fill(c);
+    fill(c, opacity);
 
     if (myHero.myMap[y][x] == true) {
-    square(x*size, y*size, size);
+      square(x*size, y*size, size);
     }
 
     x++;
@@ -115,13 +128,15 @@ void drawMiniMap() {
     }
   }
 
-  fill(cyan);
+  fill(cyan, opacity);
   square(myHero.roomX*size, myHero.roomY*size, size);
 
   rectMode(CENTER);
   popMatrix();
+  tint(150, opacity);
   mapWindow.resize(200, 200);
   image(mapWindow, -3, -5);
+  noTint();
 }
 
 void drawHeart() {

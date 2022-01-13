@@ -6,8 +6,9 @@ void intro() {
 
   textFont(windows);
   textSize(40);
+  fill(255);
+  textAlign(CENTER);
   text("DUNGEON CRAWL", 220, 55);
 
   if (mouseReleased) mode = GAME;
-  
 }

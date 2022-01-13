@@ -26,6 +26,15 @@ class Enemy extends GameObject {
     velocity = new PVector(0, 0);
   }
 
+  Enemy(int health, int s, int x, int y, int lx, int ly) {
+    hp  = health;
+    size = s;
+    roomX = x;
+    roomY = y;
+    location = new PVector(lx, ly);
+    velocity = new PVector(0, 0);
+  }
+
   void show() {
     fill(255, 0, 0);
     circle(location.x, location.y, size);
@@ -52,7 +61,8 @@ class Enemy extends GameObject {
           obj.hp = 0;
           if (hp <= 0) {
             //if (chance >= 1) {
-              myObjects.add(new DroppedItem(location.x, location.y, roomX, roomY));
+            myObjects.add(new DroppedItem(location.x, location.y, roomX, roomY));
+            points++;
             //}
             myHero.xp += xp;
             myObjects.add(new Message("+"+xp+"xp", location.x, location.y));

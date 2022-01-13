@@ -7,11 +7,11 @@ class DroppedItem extends GameObject {
 
   DroppedItem(float x, float y, int rx, int ry) {
     type = int(random(0, 4));
-    weap = int(random(0, 3));
+    weap = int(random(0, 4));
     if (weap == 0) w = new Spectre();
     if (weap == 1) w = new Shotgun();
     if (weap == 2) w = new Operator();
-    
+    if (weap == 3) w = new Magic();
     hp = 1;
     location = new PVector(x, y);
     velocity = new PVector(0, 0);

@@ -2,8 +2,8 @@ class Turret extends Enemy {
 
   int shotTimer, threshold;
 
-  Turret(int x, int y) {
-    super(TURRET_HP, TURRET_SIZE, x, y);
+  Turret(int x, int y, int lx, int ly) {
+    super(TURRET_HP, TURRET_SIZE, x, y, lx, ly);
     shotTimer = 0;
     threshold = 100;
     xp = 4;
@@ -16,7 +16,7 @@ class Turret extends Enemy {
     imageMode(CORNER);
     fill(255, 0, 0);
     textSize(15);
-    text(hp, location.x, location.y + 40);
+    text(hp, location.x, location.y + 20);
   }
 
   void act() {

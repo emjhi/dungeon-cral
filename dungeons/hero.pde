@@ -4,6 +4,8 @@ class Hero extends GameObject {
   float immunTimer;
   int lives, maxLives;
   int health;
+  int teloTimer;
+  Weapon Magic;
 
   Weapon myWeapon;
   Gif currentAction;
@@ -21,7 +23,9 @@ class Hero extends GameObject {
 
     immunTimer = 75;
 
-    myWeapon = new Shotgun();
+    teloTimer = 500;
+    Magic = new Magic();
+    myWeapon = new Spectre();
     currentAction = mandownGif;
   }
 
@@ -38,6 +42,20 @@ class Hero extends GameObject {
   void act() {
     super.act();
     myMap[roomY][roomX] = true;
+
+    if (myWeapon == Magic) {
+      teloTimer++;
+      println (teloTimer);
+      if (tkey && teloTimer >= 500) { 
+        myHero.location.x = random(100, 500);
+        myHero.location.y = random(100, 500);
+        teloTimer = 0;
+      }
+    }
+
+    imageMode(CENTER);
+    if (immunTimer >= 0) image(firewall, location.x, location.y);
+    imageMode(CORNER);
 
     if (immunTimer <= 0) {
 
